@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="BetterBack:jar">
+    <output-path>C:/xampp/htdocs/descargas</output-path>
+    <root id="archive" name="back.jar">
+      <element id="module-output" name="back" />
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+    </root>
+  </artifact>
+</component>
