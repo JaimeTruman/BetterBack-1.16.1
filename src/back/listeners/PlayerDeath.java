@@ -1,6 +1,7 @@
 package back.listeners;
 
 import back.objects.BackLocation;
+import back.objects.BackLocationsManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,40 +12,21 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerDeath implements Listener {
+    private BackLocationsManager locationsManager;
+
+    public PlayerDeath(BackLocationsManager locationsManager) {
+        this.locationsManager = locationsManager;
+    }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
         Location playerLocation = player.getLocation();
 
-        if (BackLocation.estaRegistrada(playerLocation, player)) {
+        if (locationsManager.isRegistered(player, playerLocation)) {
             return;
         }
 
-        ItemStack icon = buildIconItem(player);
-
-        BackLocation newBackLocation = new BackLocation(player.getName(), playerLocation, icon);
-        BackLocation.localizaciones.add(newBackLocation);
-    }
-
-    private ItemStack buildIconItem (Player player) {
-        ItemStack icon;
-        if (isOnTheNether(player)) {
-            icon = new ItemStack(Material.NETHER_BRICKS);
-        } else if (isOnTheEnd(player)) {
-            icon = new ItemStack(Material.ENDER_PEARL);
-        } else {
-            icon = new ItemStack(Material.GRASS_BLOCK);
-        }
-
-        return icon;
-    }
-
-    private boolean isOnTheNether (Player player) {
-        return player.getWorld().getEnvironment() == World.Environment.NETHER;
-    }
-
-    private boolean isOnTheEnd (Player player) {
-        return player.getWorld().getEnvironment() == World.Environment.THE_END;
+        BackLocation newBackLocation = new BackLocation(player, playerLocation);
     }
 }

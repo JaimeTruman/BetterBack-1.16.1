@@ -2,6 +2,7 @@ name: BetterBack
 main: back.main.Main
 version: 1.0
 api-version: "1.16"
+author: JaimeTruman
 commands:
   back:
     description: volver a tu posicion antigua
